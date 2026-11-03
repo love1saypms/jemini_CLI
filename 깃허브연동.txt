@@ -9,3 +9,20 @@
 
 웹 브라우저에서 저장소 주소
 https://github.com/love1saypms/jemini_CLI
+
+
+special-room-booking-upload
+
+
+vercel 접속: 깃허브와 동일한 계정 사용
+https://vercel.com/
+
+http://localhost:8501/
+
+
+
+  🚀 다시 실행하는 방법
+   1. 기존 라이브러리 정리 및 새 라이브러리 설치:
+   1     pip install pymupdf
+   2. 프로그램 실행:
+   1     streamlit run app.py
