@@ -1,0 +1,12 @@
+<?php
+require __DIR__ . '/bootstrap.php'; require_login();
+if (current_user()['must_change_password']) { flash('error', '초기 비밀번호를 변경해야 합니다.'); redirect('change_password.php'); }
+$date = (string)($_GET['date'] ?? date('Y-m-d')); if (!valid_date($date)) { $date = date('Y-m-d'); }
+$pdo = db();
+$rooms = $pdo->query('SELECT id, name, location FROM rooms WHERE active = 1 ORDER BY name')->fetchAll();
+$periods = $pdo->query('SELECT id, period_no, label, start_time, end_time FROM periods WHERE active = 1 ORDER BY period_no')->fetchAll();
+$stmt = $pdo->prepare('SELECT r.room_id, r.period_id, r.id, r.user_id, u.full_name, r.purpose FROM reservations r JOIN users u ON u.id = r.user_id WHERE r.reservation_date = ?'); $stmt->execute([$date]);
+$bookings = []; foreach ($stmt as $row) { $bookings[$row['room_id']][$row['period_id']] = $row; }
+layout_start('예약');
+?><h1>특별실 예약</h1><form class="date-form" method="get"><label>날짜 <input type="date" name="date" value="<?= e($date) ?>"></label><button>조회</button></form><div class="table-wrap"><table><thead><tr><th>특별실</th><?php foreach ($periods as $period): ?><th><?= e($period['period_no']) ?>교시<br><small><?= e(substr($period['start_time'],0,5)) ?>–<?= e(substr($period['end_time'],0,5)) ?></small></th><?php endforeach; ?></tr></thead><tbody><?php foreach ($rooms as $room): ?><tr><th><?= e($room['name']) ?><br><small><?= e($room['location']) ?></small></th><?php foreach ($periods as $period): $booking = $bookings[$room['id']][$period['id']] ?? null; ?><td><?php if ($booking): ?><strong><?= e($booking['full_name']) ?></strong><br><small><?= e($booking['purpose']) ?></small><?php if (is_admin() || (int)$booking['user_id'] === (int)current_user()['id']): ?><form method="post" action="reservation_cancel.php" class="inline"><?= csrf_field() ?><input type="hidden" name="reservation_id" value="<?= (int)$booking['id'] ?>"><button class="danger">취소</button></form><?php endif; ?><?php else: ?><form method="post" action="reservation_create.php"><input type="hidden" name="room_id" value="<?= (int)$room['id'] ?>"><input type="hidden" name="period_id" value="<?= (int)$period['id'] ?>"><input type="hidden" name="reservation_date" value="<?= e($date) ?>"><input name="purpose" maxlength="100" placeholder="사용 목적" required><?= csrf_field() ?><button>예약</button></form><?php endif; ?></td><?php endforeach; ?></tr><?php endforeach; ?></tbody></table></div><?php layout_end();
+

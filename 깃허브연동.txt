@@ -1,1 +1,11 @@
-https://github.com/love1saypms/jemini_CLI.git
+> git config --global user.email love1saypms@gmail.com
+> git config --global user.name 박민선
+
+1단계: 원격 저장소 주소 등록
+> git remote set-url origin https://github.com/love1saypms/jemini_CLI.git
+
+2단계: GitHub로 파일 업로드
+> git push -u origin main
+
+웹 브라우저에서 저장소 주소
+https://github.com/love1saypms/jemini_CLI
