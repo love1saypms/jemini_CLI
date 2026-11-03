@@ -20,9 +20,32 @@ https://vercel.com/
 http://localhost:8501/
 
 
-
   🚀 다시 실행하는 방법
    1. 기존 라이브러리 정리 및 새 라이브러리 설치:
    1     pip install pymupdf
    2. 프로그램 실행:
    1     streamlit run app.py
+
+
+✦ GitHub에 코드를 올리신 후, Streamlit Community Cloud를 통해 무료로 웹 서비스를 배포하는 방법은 다음과 같습니다.
+
+  1. Streamlit Community Cloud 접속
+   1. Streamlit Community Cloud (https://share.streamlit.io/) 사이트에 접속합니다.
+   2. "Continue with GitHub"를 클릭하여 GitHub 계정으로 로그인합니다.
+
+  2. 앱 배포 설정 (Deploy an app)
+   1. 워크스페이스 우측 상단의 "Create app" 버튼을 누릅니다.
+   2. "I have an app"을 선택하거나 직접 설정을 입력합니다:
+      * Repository: love1saypms/jemini_CLI 선택
+      * Branch: main
+      * Main file path: app.py (우리가 만든 메인 파일 이름)
+   3. (선택 사항) App URL 칸에서 원하는 주소 이름을 직접 정할 수 있습니다.
+
+  3. 배포 시작
+   1. 하단의 "Deploy!" 버튼을 클릭합니다.
+   2. 오른쪽에 터미널 창이 뜨면서 requirements.txt에 적힌 라이브러리들을 자동으로 설치하기 시작합니다.
+   3. 설치가 완료되면(보통 1~3분 소요) 전 세계 어디서든 접속 가능한 https://<your-app-name>.streamlit.app 주소가 생성됩니다.
+
+  💡 팁
+   * 자동 업데이트: 이제부터 로컬에서 코드를 수정하고 GitHub에 git push만 하면, Streamlit Cloud가 이를 감지하여 웹사이트를 자동으로 업데이트합니다.
+   * 라이브러리 캐시: easyocr은 모델 파일을 다운로드해야 하므로 첫 실행 시 약간의 시간이 걸릴 수 있습니다. (한 번 
