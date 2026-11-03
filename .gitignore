@@ -1,0 +1,11 @@
+# 환경 변수 및 인증 정보
+.env
+*.key
+
+# Gemini 임시 및 세션 파일
+.gemini/
+
+# Node/Python 등의 의존성 폴더 (사용 중인 언어에 맞게)
+node_modules/
+__pycache__/
+venv/
